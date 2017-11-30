@@ -1,0 +1,110 @@
+pre boot:
+
+picocom -b 115200 /dev/ttyUSB0
+sudo service tftpd-hpa restart
+
+
+
+
+
+---------------------------------------------------------------------------
+after boot:
+
+setenv ipaddr 192.168.0.100
+setenv serverip 192.168.0.1
+setenv bootargs root=/dev/nfs rw ip=192.168.0.100 console=ttyO0 nfsroot=192.168.0.1:/home/galadriel/linux-kernel-labs/modules/nfsroot
+saveenv
+
+tftp 0x81000000 textfile.txt       //   for test: md 0x81000000
+
+
+tftp 0x81000000 uImage
+tftp 0x82000000 am335x-boneblack.dtb
+
+bootm 0x81000000 - 0x82000000
+
+
+mkimage -l uImage-BBB :get information
+
+
+
+tftp 0x80200000 uImage-dtb.am335x-boneblack
+
+
+--------------------------------------------------------------------------
+
+compile something: make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
+
+comple c app: arm-linux-gnueabi-gcc  test.c
+
+
+*---------------------------------------------------------------------------
+
+
+
+pwm çıkışı: 
+
+echo am33xx_pwm >  /sys/devices/bone_capemgr.9/slots
+
+echo bone_pwm_P8_13 > /sys/devices/bone_capemgr.9/slots
+
+
+echo 1000000 > /sys/devices/ocp.3/pwm_test_P8_13.15/period
+
+echo 500000 > /sys/devices/ocp.3/pwm_test_P8_13.15/duty
+
+echo 0 > /sys/devices/ocp.3/pwm_test_P8_13.15/polarity
+
+/*
+
+echo am33xx_pwm >  /sys/devices/bone_capemgr.9/slots
+
+echo bone_pwm_P9_14 > /sys/devices/bone_capemgr.9/slots
+echo bone_pwm_P8_13 > /sys/devices/bone_capemgr.9/slots
+echo bone_pwm_P9_21 > /sys/devices/bone_capemgr.9/slots
+echo bone_pwm_P9_42 > /sys/devices/bone_capemgr.9/slots
+
+echo 1000000 > /sys/devices/ocp.3/pwm_test_P9_14.15/period
+echo 500000 > /sys/devices/ocp.3/pwm_test_P9_14.15/duty
+echo 0 > /sys/devices/ocp.3/pwm_test_P9_14.15/polarity
+
+
+echo 1000000 > /sys/devices/ocp.3/pwm_test_P8_13.16/period
+echo 500000 > /sys/devices/ocp.3/pwm_test_P8_13.16/duty
+echo 0 > /sys/devices/ocp.3/pwm_test_P8_13.16/polarity
+
+echo 1000000 > /sys/devices/ocp.3/pwm_test_P9_21.17/period
+echo 500000 > /sys/devices/ocp.3/pwm_test_P9_21.17/duty
+echo 0 > /sys/devices/ocp.3/pwm_test_P9_21.17/polarity
+
+echo 1000000 > /sys/devices/ocp.3/pwm_test_P9_42.18/period
+echo 500000 > /sys/devices/ocp.3/pwm_test_P9_42.18/duty
+echo 0 > /sys/devices/ocp.3/pwm_test_P9_42.18/polarity
+
+echo 100000000 > /sys/devices/ocp.3/pwm_test_P9_14.15/period
+echo 200000000 > /sys/devices/ocp.3/pwm_test_P8_13.16/period
+echo 300000000 > /sys/devices/ocp.3/pwm_test_P9_21.17/period
+echo 400000000 > /sys/devices/ocp.3/pwm_test_P9_42.18/period
+
+echo 5000000 > /sys/devices/ocp.3/pwm_test_P9_14.15/duty
+echo 10000000 > /sys/devices/ocp.3/pwm_test_P8_13.16/duty
+echo 15000000 > /sys/devices/ocp.3/pwm_test_P9_21.17/duty
+echo 20000000 > /sys/devices/ocp.3/pwm_test_P9_42.18/duty
+
+*/
+
+
+bone_pwm_P9_21-00A0.dtbo \
+bone_pwm_P9_22-00A0.dtbo \
+bone_pwm_P9_28-00A0.dtbo \
+bone_pwm_P9_29-00A0.dtbo \
+
+
+//double pin test
+
+	echo bone_pwm_P8_46 > /sys/devices/bone_capemgr.9/slots
+	echo 1000000 > /sys/devices/ocp.3/pwm_test_P8_46.19/period
+	echo 500000 > /sys/devices/ocp.3/pwm_test_P8_46.19/duty
+	echo 0 > /sys/devices/ocp.3/pwm_test_P8_46.19/polarity
+
+

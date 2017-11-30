@@ -1,0 +1,67 @@
+In the /home/username/develop/kbuild folder, the instructions at the beagleboard.org site http://beagleboard.org/linux were followed, with the make commands slightly altered to reflect the toolchain executable naming.
+
+First, the source code was downloaded, checked-out and patched:
+
+git clone git://github.com/beagleboard/kernel.git
+	
+
+This downloads the kernel source
+
+cd kernel
+	
+
+
+git checkout 3.8
+	
+
+The head of 3.8 release was checked out. For further study how to check out a release tag that matches pre-built published images
+
+./patch.sh
+	
+
+This step may take 10 minutes or longer
+
+
+Some further preparations before the kernel is built:
+
+cp configs/beaglebone kernel/arch/arm/configs/beaglebone_defconfig
+	
+
+We wish to build beaglebone series kernels
+
+wget http://arago-project.org/git/projects/?p=am33x-cm3.git\;a=blob_plain\;f=bin/am335x-pm-firmware.bin\;hb=HEAD -O kernel/firmware/am335x-pm-firmware.bin
+	
+
+Pre-compiled power management firmware
+
+cd kernel
+	
+
+
+
+These steps will compile the kernel and some kernel modules:
+
+make ARCH=arm CROSS_COMPILE=arm-linux-gnu- beaglebone_defconfig
+	
+
+
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- uImage dtbs
+	
+
+This step builds the kernel and may take 15-20 minutes or longer
+
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- uImage-dtb.am335x-boneblack
+	
+
+This step builds the kernel for the BBB
+
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- modules
+
+
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- LOADADDR=0X80008000 uImage
+	
+
+This builds the kernel modules and may take 20 minutes or longer
+
+
+This whole process took around an hour on a VM running on a i5 2.5GHz laptop. On an i7 1.6GHz, it took twice as long, so if you have a choice then it makes sense to spend some time examining which server you really wish to develop on
