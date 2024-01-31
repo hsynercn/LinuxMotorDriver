@@ -1,0 +1,30 @@
+repo_name: hsynercn/LinuxMotorDriver
+report_id: 831831fb41b6abd85afb8a081469b606
+version: 0.1
+repo_type: Public
+timestamp: '2024-01-31T10:50:28+00:00'
+requested_by: hsynercn
+provider: github
+branch: master
+detected_tools_count: 2
+tools:
+- name: C lang
+  description: One of the most widely used programming languages of all time
+  website_url: http://en.wikipedia.org/wiki/C_(programming_language)
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/no-img-open-source.png
+  detection_source_url: https://github.com/hsynercn/LinuxMotorDriver
+  detection_source: Repo Metadata
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/hsynercn/LinuxMotorDriver
+  detection_source: Repo Metadata
